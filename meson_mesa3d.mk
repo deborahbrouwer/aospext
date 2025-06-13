@@ -147,6 +147,7 @@ LOCAL_SHARED_LIBRARIES += libgralloctypes libutils
 
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 35; echo $$?), 0)
 LOCAL_SHARED_LIBRARIES += libui
+LOCAL_STATIC_LIBRARIES += libzstd
 AOSPEXT_GEN_PKGCONFIGS += ui
 else
 LOCAL_SHARED_LIBRARIES += libhidlbase android.hardware.graphics.mapper@4.0
