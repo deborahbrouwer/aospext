@@ -34,7 +34,7 @@ MESA_VK_LIB_SUFFIX_panfrost := panfrost
 MESA_VK_LIB_SUFFIX_virtio := virtio
 MESA_VK_LIB_SUFFIX_swrast := lvp
 
-MESON_BUILD_ARGUMENTS := \
+MESON_BUILD_ARGUMENTS = \
     -Dplatforms=android                                                          \
     -Dplatform-sdk-version=$(PLATFORM_SDK_VERSION)                               \
     -Dgallium-drivers=$(subst $(space),$(comma),$(BOARD_MESA3D_GALLIUM_DRIVERS)) \
