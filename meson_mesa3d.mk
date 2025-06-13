@@ -14,6 +14,7 @@ AOSPEXT_PROJECT_NAME := MESA3D
 AOSPEXT_BUILD_SYSTEM := meson
 
 LIBDRM_VERSION = $(shell cat external/libdrm/meson.build | grep -o "\<version\>\s*:\s*'\w*\.\w*\.\w*'" | grep -o "\w*\.\w*\.\w*" | head -1)
+
 MESA3D_VERSION = $(shell cat $(BOARD_MESA3D_SRC_DIR)/VERSION | cut -d '.' -f 1-2)
 MESA3D_GALLIUM_LIBDIR :=
 MESA3D_POPULATE_SYMLINKS :=
@@ -129,8 +130,16 @@ AOSPEXT_GEN_PKGCONFIGS += DirectX-Headers
 endif
 
 ifneq ($(MESON_GEN_LLVM_STUB),)
-MESON_LLVM_VERSION := 12.0.0
-LOCAL_SHARED_LIBRARIES += libLLVM12
+LLVM_VERSION_MAJOR = $(shell \
+    if [ -f external/llvm-project/cmake/Modules/LLVMVersion.cmake ]; then \
+        grep 'set.LLVM_VERSION_MAJOR ' external/llvm-project/cmake/Modules/LLVMVersion.cmake | grep -o '[0-9]\+'; \
+    elif [ -f external/llvm-project/llvm/CMakeLists.txt ]; then \
+        grep 'set.LLVM_VERSION_MAJOR ' external/llvm-project/llvm/CMakeLists.txt | grep -o '[0-9]\+'; \
+    else \
+      echo "0"; \
+    fi)
+MESON_LLVM_VERSION := $(LLVM_VERSION_MAJOR).0.0
+LOCAL_SHARED_LIBRARIES += libLLVM$(LLVM_VERSION_MAJOR)
 endif
 
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 30; echo $$?), 0)
