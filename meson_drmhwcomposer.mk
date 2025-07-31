@@ -9,6 +9,7 @@
 ifneq ($(filter true, $(BOARD_BUILD_AOSPEXT_DRMHWCOMPOSER)),)
 
 LOCAL_PATH := $(call my-dir)
+$(info LOCAL_PATH is $(LOCAL_PATH))
 include $(LOCAL_PATH)/aospext_cleanup.mk
 
 AOSPEXT_PROJECT_NAME := DRMHWCOMPOSER
