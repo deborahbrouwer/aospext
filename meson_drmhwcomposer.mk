@@ -18,10 +18,10 @@ LOCAL_HEADER_LIBRARIES :=
 LOCAL_SHARED_LIBRARIES := libbase libcutils libdrm libhardware libhidlbase liblog libsync libui libutils
 AOSPEXT_GEN_PKGCONFIGS := base cutils drm hardware hidlbase log sync ui utils
 
-ifneq ($(wildcard external/libdisplay-info),)
-LOCAL_STATIC_LIBRARIES += libdisplay_info
-AOSPEXT_GEN_PKGCONFIGS += display_info
-endif
+# ifneq ($(wildcard external/libdisplay-info),)
+# LOCAL_STATIC_LIBRARIES += libdisplay_info
+# AOSPEXT_GEN_PKGCONFIGS += display_info
+# endif
 
 MESON_BUILD_ARGUMENTS := \
 
@@ -33,6 +33,11 @@ AOSPEXT_GEN_TARGETS := \
 
 # HWC3
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 33; echo $$?), 0)
+
+ifneq ($(wildcard external/libdisplay-info),)
+LOCAL_STATIC_LIBRARIES += libdisplay_info
+AOSPEXT_GEN_PKGCONFIGS += display_info
+endif
 
 LOCAL_HEADER_LIBRARIES += android.hardware.graphics.composer3-command-buffer
 LOCAL_SHARED_LIBRARIES += \
